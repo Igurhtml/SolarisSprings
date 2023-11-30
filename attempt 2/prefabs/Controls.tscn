@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://2kpcvl7dcpn6"]
+
+[ext_resource type="FontFile" uid="uid://jcxcpis7wh2c" path="res://fonts/RevMiniPixel.ttf" id="1_85p6r"]
+[ext_resource type="Script" path="res://scripts/Controls.gd" id="1_x06ps"]
+[ext_resource type="Texture2D" uid="uid://c7iuau50602q4" path="res://Seasonal Tilesets/6 - Dark Forest Tileset/Background/Night.png" id="2_qy2o3"]
+[ext_resource type="Theme" uid="uid://goy78p5v838q" path="res://Temas/pause_menu.tres" id="3_ga0es"]
+[ext_resource type="AudioStream" uid="uid://bvex3i0dyu7rc" path="res://sounds/bg_music.wav" id="3_n3let"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x06ps")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_qy2o3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.5
+offset_top = -13.0
+offset_right = 37.5
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_85p6r")
+theme_override_font_sizes/font_size = 24
+text = "----- Controles -----
+
+⇆ : Andar
+Espaço : Pular
+ESC: Pausar
+I: Interação Placas
+O: Avançar Texto Placas
+
+----- Controles -----"
+horizontal_alignment = 1
+
+[node name="voltar" type="Button" parent="."]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 56.0
+offset_bottom = 24.0
+theme = ExtResource("3_ga0es")
+theme_override_fonts/font = ExtResource("1_85p6r")
+theme_override_font_sizes/font_size = 16
+text = "Voltar"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_n3let")
+volume_db = -15.0
+autoplay = true
+
+[connection signal="pressed" from="voltar" to="." method="_on_voltar_pressed"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://c35b0mtdj8nt0"]
+
+[ext_resource type="Texture2D" uid="uid://06wsfadh4pl8" path="res://Seasonal Tilesets/5 - Misc. universal tiles/Bubbling_Oil_frames (16 x 32).png" id="1_04h5e"]
+[ext_resource type="Script" path="res://scripts/oil_area.gd" id="1_mqo74"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mqum2"]
+size = Vector2(32, 32)
+
+[node name="oil-area" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_mqo74")
+
+[node name="collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mqum2")
+debug_color = Color(0.792157, 0.427451, 0.0313726, 0.419608)
+
+[node name="oil" type="Sprite2D" parent="."]
+texture_repeat = 2
+texture = ExtResource("1_04h5e")
+region_enabled = true
+region_rect = Rect2(0, 0, 3200, 32)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

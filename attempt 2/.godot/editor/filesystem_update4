@@ -1,0 +1,15 @@
+res://scripts/menu.gd
+res://prefabs/menu.tscn
+res://shaders/transition_shader.gdshader
+res://Temas/default_bns.tres
+res://shaders/movement_clouds.gdshader
+res://levels/world_02.tscn
+res://actors/ghost.tscn
+res://prefabs/highscore.tscn
+res://actors/boss.tscn
+res://levels/world.tscn
+res://prefabs/Controls.tscn
+res://prefabs/credits.tscn
+res://scripts/credits.gd
+res://scripts/warning_sign.gd
+res://prefabs/video_player.tscn

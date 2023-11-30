@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://bor0sttjw6w3g"]
+
+[ext_resource type="VideoStream" path="res://video/Solaris.ogv" id="1_h1dx8"]
+
+[node name="video_player" type="Node2D"]
+
+[node name="stream" type="VideoStreamPlayer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -544.0
+offset_top = -544.0
+offset_right = 1576.0
+offset_bottom = 1208.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+stream = ExtResource("1_h1dx8")
+autoplay = true

@@ -1,0 +1,178 @@
+[gd_scene load_steps=10 format=3 uid="uid://bi2c5d1vvts3p"]
+
+[ext_resource type="Texture2D" uid="uid://rn0iynxt1uxe" path="res://Seasonal Tilesets/5 - Misc. universal tiles/traps/Off.png" id="1_ewa63"]
+[ext_resource type="Script" path="res://scripts/fire_trap.gd" id="1_xa44s"]
+[ext_resource type="Texture2D" uid="uid://bty5h1uq4k4p6" path="res://Seasonal Tilesets/5 - Misc. universal tiles/traps/On (16x32).png" id="2_665rv"]
+
+[sub_resource type="Animation" id="Animation_yfm5q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_ewa63")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_i147v"]
+resource_name = "off"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_ewa63")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_s7wsv"]
+resource_name = "on"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_665rv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 2, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y1tm1"]
+_data = {
+"RESET": SubResource("Animation_yfm5q"),
+"off": SubResource("Animation_i147v"),
+"on": SubResource("Animation_s7wsv")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3qlqb"]
+radius = 6.0
+height = 12.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_86qwo"]
+size = Vector2(16, 16)
+
+[node name="fire_trap" type="StaticBody2D"]
+collision_layer = 2
+
+[node name="fire" type="Area2D" parent="."]
+collision_layer = 128
+script = ExtResource("1_xa44s")
+
+[node name="texture" type="Sprite2D" parent="fire"]
+position = Vector2(0, -16)
+texture = ExtResource("1_ewa63")
+region_rect = Rect2(0, 16, 16, 16)
+
+[node name="anim" type="AnimationPlayer" parent="fire"]
+autoplay = "off"
+libraries = {
+"": SubResource("AnimationLibrary_y1tm1")
+}
+
+[node name="fire_col" type="CollisionShape2D" parent="fire"]
+position = Vector2(-1, -22)
+shape = SubResource("CapsuleShape2D_3qlqb")
+disabled = true
+
+[node name="start_timer" type="Timer" parent="fire"]
+wait_time = 3.0
+autostart = true
+
+[node name="stop_timer" type="Timer" parent="fire"]
+wait_time = 6.0
+autostart = true
+
+[node name="trap_col" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_86qwo")
+
+[connection signal="body_entered" from="fire" to="fire" method="_on_body_entered"]
+[connection signal="timeout" from="fire/start_timer" to="fire" method="_on_start_timer_timeout"]
+[connection signal="timeout" from="fire/stop_timer" to="fire" method="_on_stop_timer_timeout"]

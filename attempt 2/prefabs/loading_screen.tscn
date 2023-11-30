@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://d0uvdkithul2b"]
+
+[ext_resource type="Script" path="res://scripts/loading_screen.gd" id="1_3x8du"]
+[ext_resource type="Texture2D" uid="uid://dcewxjlvy3bid" path="res://menu/title-screen.jpg" id="1_r73lj"]
+[ext_resource type="FontFile" uid="uid://jcxcpis7wh2c" path="res://fonts/RevMiniPixel.ttf" id="2_qi8mh"]
+
+[sub_resource type="Animation" id="Animation_8dnan"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["CARREGANDO RANKING....."]
+}
+
+[sub_resource type="Animation" id="Animation_tdd3t"]
+resource_name = "loading"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0620097, 0.0722627, 0.0822143, 0.0922256, 0.102055, 0.112066, 0.12226, 0.132089, 0.142828, 0.152112, 0.162305, 0.172134, 0.182509, 0.192521, 0.202714, 0.212543, 0.222191, 0.23202, 0.242213, 0.252589, 0.262782),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": ["", "C", "CA", "CAR", "CARR", "CARRE", "CARREG", "CARREGA", "CARREGAN", "CARREGAND", "CARREGANDO ", "CARREGANDO R", "CARREGANDO RA", "CARREGANDO RAN", "CARREGANDO RANK", "CARREGANDO RANKI", "CARREGANDO RANKIN", "CARREGANDO RANKING", "CARREGANDO RANKING.", "CARREGANDO RANKING..", "CARREGANDO RANKING...", "CARREGANDO RANKING...."]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yj5gx"]
+_data = {
+"RESET": SubResource("Animation_8dnan"),
+"loading": SubResource("Animation_tdd3t")
+}
+
+[node name="loading_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_3x8du")
+
+[node name="bg" type="TextureRect" parent="."]
+layout_mode = 2
+offset_right = 854.0
+offset_bottom = 420.0
+texture = ExtResource("1_r73lj")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+offset_left = 214.0
+offset_top = 162.0
+offset_right = 645.0
+offset_bottom = 201.0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_qi8mh")
+theme_override_font_sizes/font_size = 36
+text = "CARREGANDO RANKING....."
+
+[node name="anim" type="AnimationPlayer" parent="Label"]
+autoplay = "loading"
+speed_scale = 0.3
+libraries = {
+"": SubResource("AnimationLibrary_yj5gx")
+}

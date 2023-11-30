@@ -1,0 +1,138 @@
+[gd_scene load_steps=8 format=3 uid="uid://diogtxwd8tdhs"]
+
+[ext_resource type="Script" path="res://scripts/highscore.gd" id="1_0qxdq"]
+[ext_resource type="Texture2D" uid="uid://dcewxjlvy3bid" path="res://menu/title-screen.jpg" id="1_44ecb"]
+[ext_resource type="Theme" uid="uid://4rl1jbx1lgos" path="res://Temas/default_bns.tres" id="2_0fnys"]
+[ext_resource type="FontFile" uid="uid://jcxcpis7wh2c" path="res://fonts/RevMiniPixel.ttf" id="3_2qmhy"]
+[ext_resource type="Script" path="res://scripts/score_total.gd" id="3_362pr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qhiyv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rsx1j"]
+
+[node name="Highscore" type="Control" node_paths=PackedStringArray("_name", "_score", "_score_cointainer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0qxdq")
+_name = NodePath("content/row_container/name_input")
+_score = NodePath("content/row_container/score_total")
+_score_cointainer = NodePath(".")
+
+[node name="BG" type="TextureRect" parent="."]
+layout_mode = 2
+offset_right = 854.0
+offset_bottom = 420.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_44ecb")
+expand_mode = 2
+
+[node name="header" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -48.0
+offset_top = 60.0
+offset_right = 48.0
+offset_bottom = 87.0
+grow_horizontal = 2
+
+[node name="header_title" type="Label" parent="header"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.0784314, 0.839216, 0, 1)
+theme_override_fonts/font = ExtResource("3_2qmhy")
+theme_override_font_sizes/font_size = 36
+text = "RANKING"
+
+[node name="content" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.5
+offset_top = -70.0
+offset_right = 33.5
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="row_container" type="VBoxContainer" parent="content"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="score_title" type="Label" parent="content/row_container"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 1, 1)
+theme_override_fonts/font = ExtResource("3_2qmhy")
+theme_override_font_sizes/font_size = 24
+text = "SEU SCORE:"
+
+[node name="score_total" type="Label" parent="content/row_container"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 1, 1)
+theme_override_fonts/font = ExtResource("3_2qmhy")
+theme_override_font_sizes/font_size = 24
+text = "12345"
+script = ExtResource("3_362pr")
+
+[node name="HSeparator" type="HSeparator" parent="content/row_container"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_qhiyv")
+
+[node name="name_input" type="LineEdit" parent="content/row_container"]
+layout_mode = 2
+alignment = 1
+max_length = 8
+
+[node name="HSeparator2" type="HSeparator" parent="content/row_container"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_rsx1j")
+
+[node name="submit_btn" type="Button" parent="content/row_container"]
+layout_mode = 2
+theme = ExtResource("2_0fnys")
+text = "ENVIAR"
+
+[node name="alert" type="Label" parent="content/row_container"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_2qmhy")
+text = "Por favor insira seu nome"
+
+[node name="footer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -102.0
+offset_top = -66.0
+offset_right = 97.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="retry_btn" type="Button" parent="footer"]
+layout_mode = 2
+theme = ExtResource("2_0fnys")
+text = "TENTAR NOVAMENTE"
+
+[connection signal="pressed" from="content/row_container/submit_btn" to="." method="_on_submit_btn_pressed"]
+[connection signal="pressed" from="footer/retry_btn" to="." method="_on_retry_btn_pressed"]

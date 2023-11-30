@@ -1,0 +1,137 @@
+[gd_scene load_steps=16 format=3 uid="uid://dmx4qmnfk3ivw"]
+
+[ext_resource type="Script" path="res://scripts/rocket_cherry.gd" id="1_t85w5"]
+[ext_resource type="Texture2D" uid="uid://dc8ektqaowflu" path="res://Sprite Pack 2/7 - Rocket Cherry/Flying (16 x 32).png" id="2_088x3"]
+[ext_resource type="Texture2D" uid="uid://ki4nwjvx3e48" path="res://Sprite Pack 2/7 - Rocket Cherry/Hurt_Falling (16 x 32).png" id="3_xvrbh"]
+[ext_resource type="PackedScene" uid="uid://dd3k0et8vn72p" path="res://prefabs/hitbox.tscn" id="4_6sh7s"]
+[ext_resource type="AudioStream" uid="uid://dvf7ak73i5dde" path="res://sounds/hurt_enemiesmp3.mp3" id="5_5vn4q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j86pj"]
+atlas = ExtResource("2_088x3")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4nvax"]
+atlas = ExtResource("2_088x3")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xak7b"]
+atlas = ExtResource("3_xvrbh")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3rcfn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j86pj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4nvax")
+}],
+"loop": true,
+"name": &"flying",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xak7b")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2bqww"]
+size = Vector2(12, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcdql"]
+size = Vector2(12, 4)
+
+[sub_resource type="Curve2D" id="Curve2D_72kl2"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -56, 0, 0, 0, 0, 0, -96)
+}
+point_count = 4
+
+[sub_resource type="Animation" id="Animation_deofp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("path2D/pathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_t6m1c"]
+resource_name = "patrol"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("path2D/pathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rw84v"]
+_data = {
+"RESET": SubResource("Animation_deofp"),
+"patrol": SubResource("Animation_t6m1c")
+}
+
+[node name="base_patrol" type="Node2D"]
+
+[node name="rocket_cherry" type="CharacterBody2D" parent="."]
+position = Vector2(0, 0.150391)
+collision_layer = 4
+script = ExtResource("1_t85w5")
+
+[node name="anim" type="AnimatedSprite2D" parent="rocket_cherry"]
+sprite_frames = SubResource("SpriteFrames_3rcfn")
+animation = &"hurt"
+autoplay = "flying"
+
+[node name="collision" type="CollisionShape2D" parent="rocket_cherry"]
+position = Vector2(0, 7)
+shape = SubResource("RectangleShape2D_2bqww")
+
+[node name="Hitbox" parent="rocket_cherry" instance=ExtResource("4_6sh7s")]
+
+[node name="collision" type="CollisionShape2D" parent="rocket_cherry/Hitbox"]
+shape = SubResource("RectangleShape2D_vcdql")
+debug_color = Color(0.972549, 0, 0.435294, 0.419608)
+
+[node name="path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_72kl2")
+
+[node name="pathFollow2D" type="PathFollow2D" parent="path2D"]
+position = Vector2(0, 0.150391)
+rotates = false
+
+[node name="remote" type="RemoteTransform2D" parent="path2D/pathFollow2D"]
+remote_path = NodePath("../../../rocket_cherry")
+
+[node name="spawn_enemy" type="Marker2D" parent="."]
+
+[node name="anim" type="AnimationPlayer" parent="."]
+autoplay = "patrol"
+speed_scale = 0.5
+libraries = {
+"": SubResource("AnimationLibrary_rw84v")
+}
+
+[node name="hurt_enemies" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_5vn4q")
+volume_db = -5.0
+
+[connection signal="body_entered" from="rocket_cherry/Hitbox" to="rocket_cherry" method="_on_hitbox_body_entered"]

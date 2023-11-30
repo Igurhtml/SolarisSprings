@@ -1,0 +1,155 @@
+[gd_scene load_steps=10 format=3 uid="uid://bno4s4xseut4q"]
+
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_4qhdx"]
+[ext_resource type="FontFile" uid="uid://jcxcpis7wh2c" path="res://fonts/RevMiniPixel.ttf" id="1_8hkix"]
+[ext_resource type="Texture2D" uid="uid://dcewxjlvy3bid" path="res://menu/title-screen.jpg" id="2_h1us6"]
+[ext_resource type="Texture2D" uid="uid://qcfqwv3nat46" path="res://menu/Madeby.png" id="3_36trd"]
+[ext_resource type="Texture2D" uid="uid://csyp8jmw8ntxs" path="res://menu/solaristit.png" id="3_jankf"]
+[ext_resource type="Theme" uid="uid://4rl1jbx1lgos" path="res://Temas/default_bns.tres" id="4_4t16n"]
+[ext_resource type="Texture2D" uid="uid://b2lq6vd3baymj" path="res://Sprite Pack 2/2 - Mr. Mochi/Jumping (32 x 32).png" id="7_yawu3"]
+[ext_resource type="AudioStream" uid="uid://ciixc7hsskj4n" path="res://sounds/bg_music_bonfire.mp3" id="9_rik0h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_otev2"]
+
+[node name="menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4qhdx")
+
+[node name="bg" type="TextureRect" parent="."]
+layout_mode = 2
+offset_right = 854.0
+offset_bottom = 420.0
+texture = ExtResource("2_h1us6")
+expand_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 648.0
+offset_top = 8.0
+offset_right = 688.0
+offset_bottom = 48.0
+theme = ExtResource("4_4t16n")
+texture_normal = ExtResource("3_36trd")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+
+[node name="title" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_jankf")
+
+[node name="start_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" groups=["buttons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_neighbor_top = NodePath("../highscore_btn")
+theme = ExtResource("4_4t16n")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_8hkix")
+theme_override_font_sizes/font_size = 16
+text = "START"
+alignment = 0
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_otev2")
+
+[node name="controls_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" groups=["buttons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("4_4t16n")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_8hkix")
+theme_override_font_sizes/font_size = 16
+text = "CONTROLS"
+alignment = 0
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/separator = SubResource("StyleBoxEmpty_otev2")
+
+[node name="highscore_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" groups=["buttons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_neighbor_bottom = NodePath("../start_btn")
+theme = ExtResource("4_4t16n")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_8hkix")
+theme_override_font_sizes/font_size = 16
+text = "HIGHSCORE"
+alignment = 0
+
+[node name="HSeparator5" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_otev2")
+
+[node name="credits_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" groups=["buttons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_neighbor_top = NodePath("../highscore_btn")
+theme = ExtResource("4_4t16n")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_8hkix")
+theme_override_font_sizes/font_size = 16
+text = "CREDITS"
+alignment = 0
+
+[node name="HSeparator4" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/separator = SubResource("StyleBoxEmpty_otev2")
+
+[node name="quit_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer" groups=["buttons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("4_4t16n")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_8hkix")
+theme_override_font_sizes/font_size = 16
+text = "QUIT"
+alignment = 0
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_otev2")
+
+[node name="mochi" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_yawu3")
+expand_mode = 2
+flip_h = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_rik0h")
+volume_db = -10.0
+autoplay = true
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/start_btn" to="." method="_on_start_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/controls_btn" to="." method="_on_controls_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/highscore_btn" to="." method="_on_highscore_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/credits_btn" to="." method="_on_credits_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/quit_btn" to="." method="_on_quit_btn_pressed"]

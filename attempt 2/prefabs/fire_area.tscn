@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://coq7c5u76p0j7"]
+
+[ext_resource type="Texture2D" uid="uid://rn0iynxt1uxe" path="res://Seasonal Tilesets/5 - Misc. universal tiles/traps/Off.png" id="1_8bflw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ussj"]
+size = Vector2(16, 16)
+
+[node name="fire_area" type="Area2D"]
+
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_8ussj")
+
+[node name="fire_trap" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("1_8bflw")
+region_enabled = true
+region_rect = Rect2(0, 16, 16, 16)
+
+[node name="anim" type="AnimationPlayer" parent="."]
